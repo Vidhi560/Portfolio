@@ -3,27 +3,6 @@
    JavaScript Functionality
    ============================================ */
 
-const GITHUB_USERNAME = 'Vidhi560';
-const GITHUB_USER_URL = `https://api.github.com/users/${GITHUB_USERNAME}`;
-const GITHUB_REPOS_URL = `https://api.github.com/users/${GITHUB_USERNAME}/repos?sort=updated&per_page=100`;
-const OG_IMAGE_BASE = `https://opengraph.githubassets.com/1/${GITHUB_USERNAME}/`;
-
-/** Technology-themed placeholder gradients */
-const PLACEHOLDER_THEMES = {
-    netflix: { class: 'placeholder-netflix', label: 'Netflix Analytics' },
-    powerbi: { class: 'placeholder-powerbi', label: 'Power BI Dashboard' },
-    analytics: { class: 'placeholder-analytics', label: 'Data Analytics' },
-    ml: { class: 'placeholder-ml', label: 'Machine Learning' },
-    default: { class: 'placeholder-default', label: 'Project' }
-};
-
-const FALLBACK_KEYWORDS = {
-    netflix: 'netflix',
-    powerbi: 'powerbi',
-    analytics: 'segmentation',
-    ml: 'flower'
-};
-
 document.addEventListener('DOMContentLoaded', () => {
     initLoader();
     initThemeToggle();
@@ -33,9 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initScrollAnimations();
     initParticleBackground();
     initTypingEffect();
-    initCircularSkills();
-    initGitHubProjects();
-    initProjectImageFallbacks();
+
     initBackToTop();
     initContactForm();
     initSmoothScroll();
@@ -246,7 +223,7 @@ function initTypingEffect() {
         return;
     }
 
-    const texts = ['Data Analyst', 'Power BI Developer', 'Data Science Enthusiast'];
+    const texts = ['Data & AI Specialist', 'Machine Learning Expert', 'Data Scientist'];
     let ti = 0, ci = 0, del = false;
 
     const type = () => {
@@ -270,174 +247,7 @@ function initTypingEffect() {
     type();
 }
 
-// ============================================
-// CIRCULAR SKILL PROGRESS
-// ============================================
-function initCircularSkills() {
-    const circumference = 2 * Math.PI * 52;
-    const circles = document.querySelectorAll('.circle-progress');
 
-    const observer = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-            if (!entry.isIntersecting) return;
-            const circle = entry.target;
-            const percent = parseInt(circle.dataset.percent, 10) || 0;
-            const offset = circumference - (percent / 100) * circumference;
-            circle.style.strokeDashoffset = offset;
-            observer.unobserve(circle);
-        });
-    }, { threshold: 0.4 });
-
-    circles.forEach(c => {
-        c.style.strokeDasharray = circumference;
-        c.style.strokeDashoffset = circumference;
-        observer.observe(c);
-    });
-}
-
-
-
-// ============================================
-// GITHUB PROJECTS
-// ============================================
-async function initGitHubProjects() {
-    const container = document.getElementById('github-projects');
-    if (!container) return;
-
-    try {
-        const res = await fetch(GITHUB_REPOS_URL);
-        if (!res.ok) throw new Error('Failed');
-
-        const allowedKeywords = ['data science', 'machine learning', 'python', 'sql', 'analytics', 'data', 'ml', 'dashboard', 'analysis', 'segmentation', 'prediction', 'model', 'classification', 'database'];
-        const isAllowed = repo => {
-            const text = [repo.name, repo.description, repo.language, ...(repo.topics || [])].join(' ').toLowerCase();
-            return allowedKeywords.some(kw => text.includes(kw));
-        };
-
-        const repos = (await res.json()).filter(r => !r.fork && r.name.toLowerCase() !== 'portfolio' && isAllowed(r));
-        container.innerHTML = repos.length
-            ? repos.map(r => createProjectCard(r)).join('')
-            : '<p class="no-projects">No projects found.</p>';
-
-        buildFilterButtons(repos);
-        initProjectFilter();
-        initProjectSearch();
-        initProjectImageFallbacks();
-        initScrollAnimations();
-    } catch {
-        container.innerHTML = '<div class="error-message"><p>Unable to load GitHub repositories.</p></div>';
-    }
-}
-
-function getProjectImage(repo) {
-    const text = [repo.name, repo.description, ...(repo.topics || [])].join(' ').toLowerCase();
-    if (text.includes('movie') || text.includes('cinema') || text.includes('film')) return 'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=600&q=80&auto=format&fit=crop';
-    if (text.includes('sql') || text.includes('database')) return 'https://images.unsplash.com/photo-1544383835-bda2bc66a55d?w=600&q=80&auto=format&fit=crop';
-    if (text.includes('python')) return 'https://images.unsplash.com/photo-1526379095098-d400fd0bf935?w=600&q=80&auto=format&fit=crop';
-    if (text.includes('sales') || text.includes('dashboard') || text.includes('power bi') || text.includes('analytics') || text.includes('analysis') || text.includes('data')) return 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&q=80&auto=format&fit=crop';
-    if (text.includes('machine learning') || text.includes('ml') || text.includes('encoding') || text.includes('classification')) return 'https://images.unsplash.com/photo-1527474305487-b87b222841cc?w=600&q=80&auto=format&fit=crop';
-    return 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=600&q=80&auto=format&fit=crop'; // Premium dark placeholder
-}
-
-function createProjectCard(repo) {
-    const lang = repo.language || 'Other';
-    const imgUrl = getProjectImage(repo);
-    const topics = (repo.topics || []).slice(0, 4);
-
-    return `
-        <article class="project-card-premium reveal" data-language="${lang.toLowerCase()}" data-name="${repo.name.toLowerCase()}">
-            <div class="project-banner-wrap">
-                <img class="project-banner" src="${imgUrl}" alt="${escapeHtml(repo.name)}" loading="lazy"
-                     data-repo="${escapeHtml(repo.name)}" data-fallback="default">
-                <div class="project-banner-overlay"></div>
-            </div>
-            <div class="project-body">
-                <h3>${escapeHtml(repo.name)}</h3>
-                <p>${escapeHtml(repo.description || 'No description available.')}</p>
-                <div class="project-tech">
-                    ${lang !== 'Other' ? `<span class="tech-badge">${escapeHtml(lang)}</span>` : ''}
-                    ${topics.map(t => `<span class="tech-badge">${escapeHtml(t)}</span>`).join('')}
-                </div>
-                <div class="project-actions">
-                    <a href="${repo.html_url}" class="btn btn-sm btn-primary" target="_blank" rel="noopener noreferrer">
-                        <i class="fab fa-github"></i> GitHub
-                    </a>
-                    ${repo.homepage ? `
-                        <a href="${repo.homepage}" class="btn btn-sm btn-glass" target="_blank" rel="noopener noreferrer">
-                            <i class="fas fa-external-link-alt"></i> Live Demo
-                        </a>
-                    ` : ''}
-                </div>
-                <div class="project-meta">
-                    <span class="project-date">Updated ${formatDate(repo.updated_at)}</span>
-                    ${repo.stargazers_count > 0 ? `<span class="project-stars"><i class="fas fa-star"></i> ${repo.stargazers_count}</span>` : ''}
-                </div>
-            </div>
-        </article>
-    `;
-}
-
-function buildFilterButtons(repos) {
-    const container = document.getElementById('projects-filter');
-    if (!container) return;
-
-    const langs = [...new Set(repos.map(r => r.language).filter(Boolean))].sort();
-    container.innerHTML = `
-        <button class="filter-btn active" type="button" data-filter="all">All</button>
-        ${langs.map(l => `<button class="filter-btn" type="button" data-filter="${l.toLowerCase()}">${escapeHtml(l)}</button>`).join('')}
-    `;
-}
-
-function initProjectFilter() {
-    const container = document.getElementById('projects-filter');
-    container?.addEventListener('click', e => {
-        const btn = e.target.closest('.filter-btn');
-        if (!btn) return;
-        container.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        document.getElementById('project-search').value = '';
-        applyFilters(btn.dataset.filter, '');
-    });
-}
-
-function initProjectSearch() {
-    document.getElementById('project-search')?.addEventListener('input', e => {
-        const active = document.querySelector('.filter-btn.active');
-        applyFilters(active?.dataset.filter || 'all', e.target.value.toLowerCase());
-    });
-}
-
-function applyFilters(langFilter, search) {
-    document.querySelectorAll('#github-projects .project-card-premium').forEach(card => {
-        const lang = (card.dataset.language || '').toLowerCase();
-        const name = card.dataset.name || '';
-        const desc = card.querySelector('p')?.textContent.toLowerCase() || '';
-        const matchLang = langFilter === 'all' || lang === langFilter;
-        const matchSearch = !search || name.includes(search) || desc.includes(search);
-        card.style.display = matchLang && matchSearch ? '' : 'none';
-    });
-}
-
-// ============================================
-// PROJECT IMAGE FALLBACKS
-// ============================================
-function initProjectImageFallbacks() {
-    document.querySelectorAll('.project-banner').forEach(img => {
-        if (img.dataset.fallbackBound) return;
-        img.dataset.fallbackBound = 'true';
-
-        img.addEventListener('error', () => {
-            const key = img.dataset.fallback || 'default';
-            const theme = PLACEHOLDER_THEMES[key] || PLACEHOLDER_THEMES.default;
-            const wrap = img.closest('.project-banner-wrap');
-            if (!wrap) return;
-
-            img.style.display = 'none';
-            wrap.classList.add(theme.class);
-            wrap.setAttribute('data-label', theme.label);
-        }, { once: true });
-    });
-}
 
 // ============================================
 // BACK TO TOP
