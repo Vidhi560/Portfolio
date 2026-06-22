@@ -34,7 +34,6 @@ document.addEventListener('DOMContentLoaded', () => {
     initParticleBackground();
     initTypingEffect();
     initCircularSkills();
-    initGitHubDashboard();
     initGitHubProjects();
     initProjectImageFallbacks();
     initBackToTop();
@@ -296,93 +295,7 @@ function initCircularSkills() {
     });
 }
 
-// ============================================
-// GITHUB DASHBOARD
-// ============================================
-async function initGitHubDashboard() {
-    const recentList = document.getElementById('github-recent-list');
-    const contribGrid = document.getElementById('contrib-grid');
 
-    try {
-        const [userRes, reposRes] = await Promise.all([
-            fetch(GITHUB_USER_URL),
-            fetch(GITHUB_REPOS_URL)
-        ]);
-
-        if (!userRes.ok || !reposRes.ok) throw new Error('API error');
-
-        const user = await userRes.json();
-        const repos = await reposRes.json();
-        const publicRepos = repos.filter(r => !r.fork);
-        const totalStars = repos.reduce((sum, r) => sum + r.stargazers_count, 0);
-
-        setText('gh-repos', user.public_repos ?? publicRepos.length);
-        setText('gh-followers', user.followers ?? 0);
-        setText('gh-following', user.following ?? 0);
-        setText('gh-stars', totalStars);
-
-        if (contribGrid) {
-            renderContributionGrid(contribGrid, buildActivityMap(repos));
-        }
-
-        if (recentList) {
-            const recent = [...publicRepos]
-                .sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at))
-                .slice(0, 5);
-
-            recentList.innerHTML = recent.length
-                ? recent.map(r => `
-                    <a href="${r.html_url}" class="github-recent-item" target="_blank" rel="noopener noreferrer">
-                        <strong><i class="fas fa-book" aria-hidden="true"></i> ${escapeHtml(r.name)}</strong>
-                        <span>${formatDate(r.updated_at)}</span>
-                    </a>
-                `).join('')
-                : '<p class="loading-text">No public repositories found.</p>';
-        }
-    } catch {
-        ['gh-repos', 'gh-followers', 'gh-following', 'gh-stars'].forEach(id => setText(id, '—'));
-        if (recentList) recentList.innerHTML = '<p class="loading-text">Unable to load GitHub data.</p>';
-        if (contribGrid) contribGrid.innerHTML = '';
-    }
-}
-
-function setText(id, val) {
-    const el = document.getElementById(id);
-    if (el) el.textContent = val;
-}
-
-function buildActivityMap(repos) {
-    const map = {};
-    const today = new Date();
-    const weeks = 52;
-
-    for (let w = 0; w < weeks; w++) {
-        for (let d = 0; d < 7; d++) {
-            const date = new Date(today);
-            date.setDate(date.getDate() - (weeks - w) * 7 - (6 - d));
-            map[date.toISOString().split('T')[0]] = 0;
-        }
-    }
-
-    repos.forEach(repo => {
-        const key = new Date(repo.pushed_at || repo.updated_at).toISOString().split('T')[0];
-        if (map[key] !== undefined) map[key]++;
-    });
-
-    return map;
-}
-
-function renderContributionGrid(container, activityMap) {
-    const dates = Object.keys(activityMap).sort();
-    const max = Math.max(...Object.values(activityMap), 1);
-
-    container.innerHTML = dates.map(date => {
-        const count = activityMap[date];
-        const level = count === 0 ? 0 : Math.min(4, Math.ceil((count / max) * 4));
-        const label = new Date(date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-        return `<span class="contrib-cell level-${level}" title="${count} update(s) on ${label}"></span>`;
-    }).join('');
-}
 
 // ============================================
 // GITHUB PROJECTS
@@ -395,7 +308,13 @@ async function initGitHubProjects() {
         const res = await fetch(GITHUB_REPOS_URL);
         if (!res.ok) throw new Error('Failed');
 
-        const repos = (await res.json()).filter(r => !r.fork);
+        const allowedKeywords = ['data science', 'machine learning', 'python', 'sql', 'analytics', 'data', 'ml', 'dashboard', 'analysis', 'segmentation', 'prediction', 'model', 'classification', 'database'];
+        const isAllowed = repo => {
+            const text = [repo.name, repo.description, repo.language, ...(repo.topics || [])].join(' ').toLowerCase();
+            return allowedKeywords.some(kw => text.includes(kw));
+        };
+
+        const repos = (await res.json()).filter(r => !r.fork && r.name.toLowerCase() !== 'portfolio' && isAllowed(r));
         container.innerHTML = repos.length
             ? repos.map(r => createProjectCard(r)).join('')
             : '<p class="no-projects">No projects found.</p>';
@@ -410,15 +329,25 @@ async function initGitHubProjects() {
     }
 }
 
+function getProjectImage(repo) {
+    const text = [repo.name, repo.description, ...(repo.topics || [])].join(' ').toLowerCase();
+    if (text.includes('movie') || text.includes('cinema') || text.includes('film')) return 'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=600&q=80&auto=format&fit=crop';
+    if (text.includes('sql') || text.includes('database')) return 'https://images.unsplash.com/photo-1544383835-bda2bc66a55d?w=600&q=80&auto=format&fit=crop';
+    if (text.includes('python')) return 'https://images.unsplash.com/photo-1526379095098-d400fd0bf935?w=600&q=80&auto=format&fit=crop';
+    if (text.includes('sales') || text.includes('dashboard') || text.includes('power bi') || text.includes('analytics') || text.includes('analysis') || text.includes('data')) return 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&q=80&auto=format&fit=crop';
+    if (text.includes('machine learning') || text.includes('ml') || text.includes('encoding') || text.includes('classification')) return 'https://images.unsplash.com/photo-1527474305487-b87b222841cc?w=600&q=80&auto=format&fit=crop';
+    return 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=600&q=80&auto=format&fit=crop'; // Premium dark placeholder
+}
+
 function createProjectCard(repo) {
     const lang = repo.language || 'Other';
-    const ogUrl = `${OG_IMAGE_BASE}${repo.name}`;
+    const imgUrl = getProjectImage(repo);
     const topics = (repo.topics || []).slice(0, 4);
 
     return `
         <article class="project-card-premium reveal" data-language="${lang.toLowerCase()}" data-name="${repo.name.toLowerCase()}">
             <div class="project-banner-wrap">
-                <img class="project-banner" src="${ogUrl}" alt="${escapeHtml(repo.name)}" loading="lazy"
+                <img class="project-banner" src="${imgUrl}" alt="${escapeHtml(repo.name)}" loading="lazy"
                      data-repo="${escapeHtml(repo.name)}" data-fallback="default">
                 <div class="project-banner-overlay"></div>
             </div>
