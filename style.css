@@ -31,7 +31,7 @@
   --nav-h: 76px;
   --transition: 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
   --font-body: 'Inter', system-ui, sans-serif;
-  --font-heading: 'Poppins', 'Inter', sans-serif;
+  --font-heading: 'Outfit', 'Inter', sans-serif;
 }
 
 [data-theme="light"] {
@@ -604,6 +604,7 @@ ul { list-style: none; }
   .hero-frame { max-width: 280px; }
   .stats-grid { grid-template-columns: repeat(2, 1fr); }
   .contact-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+  .journey-layout { grid-template-columns: 1fr; gap: 3.5rem; }
 }
 
 @media (max-width: 768px) {
@@ -623,6 +624,7 @@ ul { list-style: none; }
   .stats-grid { grid-template-columns: 1fr 1fr; }
   .about-card { padding: 2rem; }
   .contact-info, .contact-form { padding: 2rem; }
+  .github-projects-grid { padding: 0 1rem 1.5rem; }
 }
 
 @media (max-width: 480px) {
@@ -631,6 +633,217 @@ ul { list-style: none; }
   .stats-grid { grid-template-columns: 1fr; }
   .resume-actions { flex-direction: column; gap: 0.75rem; }
   .resume-actions .btn { width: 100%; }
+}
+
+/* Projects Details & Case Study Styles */
+.project-details {
+  margin-top: 1rem;
+  border-top: 1px solid var(--glass-border);
+  padding-top: 0.75rem;
+}
+.project-details summary {
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: var(--accent);
+  cursor: pointer;
+  padding: 0.5rem 0;
+  user-select: none;
+  transition: color var(--transition);
+}
+.project-details summary::-webkit-details-marker {
+  display: none;
+}
+.project-details summary:hover {
+  color: var(--primary-light);
+}
+.project-details summary i {
+  transition: transform 0.3s ease;
+  font-size: 0.75rem;
+}
+.project-details[open] summary i {
+  transform: rotate(180deg);
+}
+.details-content {
+  padding: 0.85rem 0 0.5rem;
+  animation: slideDownFade 0.35s ease-out forwards;
+}
+@keyframes slideDownFade {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.details-section {
+  margin-bottom: 1rem;
+}
+.details-section:last-child {
+  margin-bottom: 0;
+}
+.details-section h4 {
+  font-size: 0.825rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text);
+  margin-bottom: 0.35rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.details-section h4 i {
+  color: var(--primary-light);
+  font-size: 0.85rem;
+}
+.details-section p, .details-section ul {
+  font-size: 0.825rem !important;
+  line-height: 1.5 !important;
+  color: var(--text-muted);
+}
+.details-section ul {
+  padding-left: 1.1rem;
+  list-style-type: disc;
+}
+.details-section ul li {
+  margin-bottom: 0.25rem;
+}
+
+/* GitHub Accordion Styles */
+.github-repos-section {
+  margin-top: 3.5rem;
+  width: 100%;
+}
+.github-repos-accordion {
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  background: var(--glass);
+  overflow: hidden;
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
+.github-repos-accordion:hover {
+  border-color: rgba(99, 102, 241, 0.25);
+  box-shadow: var(--shadow);
+}
+.github-repos-accordion[open] {
+  border-color: rgba(99, 102, 241, 0.3);
+}
+.github-repos-summary {
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 2rem;
+  font-family: var(--font-heading);
+  font-size: 1.15rem;
+  font-weight: 700;
+  cursor: pointer;
+  user-select: none;
+  color: var(--text);
+}
+.github-repos-summary::-webkit-details-marker {
+  display: none;
+}
+.github-repos-summary i.toggle-icon {
+  transition: transform 0.3s ease;
+  font-size: 0.9rem;
+  color: var(--text-dim);
+}
+.github-repos-accordion[open] .github-repos-summary i.toggle-icon {
+  transform: rotate(180deg);
+  color: var(--accent);
+}
+.github-repos-summary span {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.github-repos-summary span i {
+  color: var(--primary-light);
+}
+.github-projects-grid {
+  padding: 0 2rem 2rem;
+  margin-top: 1rem;
+}
+
+/* Journey Experience Layout */
+.journey-layout {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 3rem;
+  align-items: start;
+}
+.journey-column-title {
+  font-family: var(--font-heading);
+  font-size: 1.45rem;
+  font-weight: 800;
+  margin-bottom: 2rem;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  letter-spacing: -0.5px;
+}
+.journey-column-title i {
+  color: var(--primary-light);
+}
+.competency-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+.competency-card {
+  display: flex;
+  gap: 1.25rem;
+  padding: 1.5rem 1.75rem;
+  box-shadow: var(--shadow);
+}
+.competency-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(6, 182, 212, 0.3);
+  box-shadow: var(--shadow-hover);
+}
+.comp-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: var(--gradient-soft);
+  border: 1px solid var(--glass-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent);
+  font-size: 1.15rem;
+  flex-shrink: 0;
+  transition: transform var(--transition);
+}
+.competency-card:hover .comp-icon {
+  transform: scale(1.1) rotate(5deg);
+  color: #fff;
+  background: var(--gradient);
+}
+.comp-body h4 {
+  font-family: var(--font-heading);
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin-bottom: 0.35rem;
+  color: var(--text);
+}
+.comp-body p {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  line-height: 1.5;
+  margin-bottom: 0;
+}
+
+/* Cert Card Custom Styles */
+.cert-meta {
+  font-size: 0.825rem;
+  color: var(--text-dim);
+  font-weight: 600;
+  padding: 0 1.25rem 0.5rem;
+}
+.cert-actions-btn {
+  padding: 0 1.25rem 1.5rem;
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -28,10 +28,10 @@
   const RELEVANT_LANGUAGES = ['python', 'sql', 'jupyter notebook', 'r'];
 
   const TYPING_WORDS = [
-    'Data Science Enthusiast',
+    'Data Scientist',
     'Machine Learning Engineer',
-    'AI & Deep Learning Learner',
-    'Python Developer'
+    'AI & Deep Learning Specialist',
+    'Generative AI & LLM Developer'
   ];
 
   let projectCount = 0;
@@ -241,7 +241,8 @@
     const reposEl = document.getElementById('stat-repos');
 
     if (projectsEl) {
-      projectsEl.dataset.target = projectCount;
+      const targetVal = parseInt(projectsEl.dataset.target, 10) || 5;
+      projectsEl.dataset.target = targetVal;
       projectsEl.classList.add('stat-dynamic');
       if (isInViewport(projectsEl) && !projectsEl.dataset.animated) animateCounter(projectsEl);
     }
@@ -314,8 +315,8 @@
 
   /* --- GitHub Projects --- */
   async function fetchProjects() {
-    const grid = document.getElementById('projects-grid');
-    const loading = document.getElementById('projects-loading');
+    const grid = document.getElementById('github-projects-grid');
+    const loading = document.getElementById('github-projects-loading');
     const errorEl = document.getElementById('projects-error');
     const emptyEl = document.getElementById('projects-empty');
     if (!grid) return;
@@ -328,9 +329,9 @@
       repoCount = repos.filter(r => !r.fork && !isExcludedRepo(r.name)).length;
 
       const filtered = repos
-        .filter(r => !r.fork)
-        .filter(r => !isExcludedRepo(r.name))
-        .filter(r => isRelevantRepo(r));
+         .filter(r => !r.fork)
+         .filter(r => !isExcludedRepo(r.name))
+         .filter(r => isRelevantRepo(r));
 
       projectCount = filtered.length;
       loading?.classList.add('hidden');
