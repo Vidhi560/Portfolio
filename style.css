@@ -445,7 +445,7 @@ ul { list-style: none; }
   background: var(--glass); border: 1px solid var(--glass-border);
   border-radius: var(--radius-lg); overflow: hidden;
   box-shadow: var(--shadow);
-  transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition);
+  transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition), opacity 0.3s ease;
 }
 .project-card:hover {
   transform: translateY(-8px) scale(1.02);
@@ -730,6 +730,47 @@ ul { list-style: none; }
 }
 .details-section ul li {
   margin-bottom: 0.25rem;
+}
+
+/* Project Filters Styles */
+.project-filters {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 3.5rem;
+  flex-wrap: wrap;
+}
+
+.filter-btn {
+  padding: 0.6rem 1.4rem;
+  background: var(--surface);
+  border: 1px solid var(--glass-border);
+  border-radius: 50px;
+  font-family: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.filter-btn:hover {
+  border-color: var(--primary-light);
+  color: var(--primary-light);
+  transform: translateY(-2px);
+}
+
+.filter-btn.active {
+  background: var(--gradient);
+  color: #fff;
+  border-color: transparent;
+  box-shadow: 0 4px 15px rgba(99, 102, 241, 0.25);
+}
+
+.filter-btn:focus-visible {
+  outline: 2px solid var(--primary-light);
+  outline-offset: 2px;
 }
 
 /* GitHub Accordion Styles */

@@ -368,19 +368,28 @@
           <p class="section-desc">Prerendered ATS-Optimized case studies detailing architecture, techniques, and quantifiable business outcomes.</p>
         </header>
 
+        <!-- Project Filters -->
+        <div class="project-filters fade-up" role="tablist" aria-label="Project Categories">
+          <button class="filter-btn active" data-filter="all" role="tab" aria-selected="true" tabindex="0">All Projects</button>
+          <button class="filter-btn" data-filter="machine-learning" role="tab" aria-selected="false" tabindex="-1">Machine Learning</button>
+          <button class="filter-btn" data-filter="deep-learning" role="tab" aria-selected="false" tabindex="-1">Deep Learning &amp; CV</button>
+          <button class="filter-btn" data-filter="nlp" role="tab" aria-selected="false" tabindex="-1">NLP &amp; GenAI</button>
+          <button class="filter-btn" data-filter="analytics" role="tab" aria-selected="false" tabindex="-1">Data Analytics &amp; BI</button>
+        </div>
+
         <div class="projects-grid" id="featured-projects-grid">
           
           <!-- Project 1: Recommender -->
-          <article class="project-card fade-up">
+          <article class="project-card machine-learning nlp fade-up">
             <div class="project-img-wrap">
-              <img class="project-img" src="assets/projects/recommender.png" alt="Hybrid Movie Recommendation Engine" loading="lazy">
+              <img class="project-img" src="assets/projects/recommender.png" alt="Hybrid Recommendation Engine for Personalized Content Discovery" loading="lazy">
             </div>
             <div class="project-body">
               <div class="project-header">
-                <span class="project-category">Recommendation Systems</span>
-                <h3>Hybrid Movie Recommendation Engine</h3>
+                <span class="project-category">Recommendation Systems &amp; NLP</span>
+                <h3>Hybrid Recommendation Engine for Personalized Content Discovery</h3>
               </div>
-              <p class="project-summary">Engineered a content-based recommendation model utilizing TF-IDF tokenization and Cosine Similarity to resolve ratings sparsity and recommendation latencies.</p>
+              <p class="project-summary">Developed a high-performance content-based recommendation system leveraging TF-IDF Vectorization and Cosine Similarity to address cold-start issues, optimize query latency, and deliver personalized user recommendations.</p>
               
               <details class="project-details">
                 <summary><span class="details-toggle-txt">View Case Study</span> <i class="fas fa-chevron-down"></i></summary>
@@ -392,14 +401,15 @@
                   <div class="details-section">
                     <h4><i class="fas fa-cogs"></i> Key Features</h4>
                     <ul>
-                      <li>Vectorized textual metadata of 5,000+ movies using <strong>TF-IDF Vectorizer</strong>.</li>
-                      <li>Computed real-time similarity indices with a <strong>Cosine Similarity Matrix</strong>.</li>
-                      <li>Built an interactive filtering logic by integrating genre tags and popularity scores.</li>
+                      <li>Engineered text preprocessing pipelines using regular expressions and NLTK to clean and normalize movie metadata.</li>
+                      <li>Vectorized textual metadata for 5,000+ titles using **TF-IDF Vectorizer** to transform text into high-dimensional numerical feature vectors.</li>
+                      <li>Calculated pairwise item similarity scores utilizing a **Cosine Similarity Matrix** for real-time recommendation retrieval.</li>
+                      <li>Implemented dynamic fallback mechanisms and hybrid filtering combining genre tags with popularity metrics.</li>
                     </ul>
                   </div>
                   <div class="details-section">
                     <h4><i class="fas fa-chart-line"></i> Business Impact &amp; Outcome</h4>
-                    <p>Reduced recommendation search query latency by <strong>45%</strong> and boosted model accuracy, leading to a <strong>94% offline user satisfaction rate</strong>.</p>
+                    <p>Reduced query search latency by <strong>45%</strong> and increased offline recommendation precision/recall metrics, resulting in a <strong>94% simulated user satisfaction rate</strong>.</p>
                   </div>
                 </div>
               </details>
@@ -419,16 +429,16 @@
           </article>
 
           <!-- Project 2: Deep Learning CNN -->
-          <article class="project-card fade-up">
+          <article class="project-card deep-learning fade-up">
             <div class="project-img-wrap">
-              <img class="project-img" src="assets/projects/deep_learning.png" alt="Cat vs Dog CNN Image Classifier" loading="lazy">
+              <img class="project-img" src="assets/projects/deep_learning.png" alt="Convolutional Neural Network (CNN) for Automated Image Classification &amp; Feature Extraction" loading="lazy">
             </div>
             <div class="project-body">
               <div class="project-header">
-                <span class="project-category">Computer Vision</span>
-                <h3>CNN Image Classifier (Cat vs Dog)</h3>
+                <span class="project-category">Computer Vision &amp; Deep Learning</span>
+                <h3>Convolutional Neural Network (CNN) for Automated Image Classification &amp; Feature Extraction</h3>
               </div>
-              <p class="project-summary">Constructed a 4-layer Convolutional Neural Network (CNN) incorporating dropout regularizations and spatial augmentation to execute robust image classification.</p>
+              <p class="project-summary">Designed and trained an end-to-end deep learning Convolutional Neural Network (CNN) incorporating spatial augmentation and dropout regularization to classify image datasets with high precision.</p>
               
               <details class="project-details">
                 <summary><span class="details-toggle-txt">View Case Study</span> <i class="fas fa-chevron-down"></i></summary>
@@ -440,14 +450,15 @@
                   <div class="details-section">
                     <h4><i class="fas fa-cogs"></i> Key Features</h4>
                     <ul>
-                      <li>Designed a 4-layer sequential <strong>CNN</strong> with Max-Pooling, Batch Normalization, and Dropout layers (0.5).</li>
-                      <li>Implemented real-time image transformations using Keras <strong>ImageDataGenerator</strong> for spatial augmentation.</li>
-                      <li>Evaluated training curves using loss/accuracy matrices and adjusted learning rates using callbacks.</li>
+                      <li>Architected a 4-layer sequential **Convolutional Neural Network (CNN)** utilizing Conv2D, MaxPooling2D, Batch Normalization, and Dropout (0.5) to prevent overfitting.</li>
+                      <li>Integrated real-time data ingestion pipelines using Keras **ImageDataGenerator** for spatial transformations, scaling, shearing, and zooming.</li>
+                      <li>Employed callback systems including EarlyStopping and ReduceLROnPlateau to optimize learning rate schedules during training.</li>
+                      <li>Tracked loss and accuracy metrics via Matplotlib learning curves to evaluate generalization bounds.</li>
                     </ul>
                   </div>
                   <div class="details-section">
                     <h4><i class="fas fa-chart-line"></i> Business Impact &amp; Outcome</h4>
-                    <p>Attained <strong>91.5% classification accuracy</strong> on a test set of 25,000 images, reducing image tagging error rates by <strong>12%</strong>.</p>
+                    <p>Achieved a <strong>91.5% classification accuracy</strong> on a validation set of 25,000 images, reducing image tagging error rates by <strong>12%</strong> and demonstrating solid generalization capabilities.</p>
                   </div>
                 </div>
               </details>
@@ -467,16 +478,16 @@
           </article>
 
           <!-- Project 3: NLP N-Gram -->
-          <article class="project-card fade-up">
+          <article class="project-card nlp fade-up">
             <div class="project-img-wrap">
-              <img class="project-img" src="assets/projects/nlp.png" alt="NLP Tokenization & Lemmatization Pipeline" loading="lazy">
+              <img class="project-img" src="assets/projects/nlp.png" alt="Natural Language Processing (NLP) Pipeline &amp; N-Gram Text Analyzer" loading="lazy">
             </div>
             <div class="project-body">
               <div class="project-header">
                 <span class="project-category">Natural Language Processing</span>
-                <h3>NLP Text Preprocessing &amp; N-Gram Analyzer</h3>
+                <h3>Natural Language Processing (NLP) Pipeline &amp; N-Gram Text Analyzer</h3>
               </div>
-              <p class="project-summary">Coded a modular text normalization pipeline demonstrating stop-words extraction, POS-tagging, lemmatization, and multi-gram frequencies.</p>
+              <p class="project-summary">Built a modular NLP pipeline in Python for advanced text normalization, tokenization, POS-tagging, and N-gram frequency analysis to extract semantic structure from unstructured text.</p>
               
               <details class="project-details">
                 <summary><span class="details-toggle-txt">View Case Study</span> <i class="fas fa-chevron-down"></i></summary>
@@ -488,14 +499,15 @@
                   <div class="details-section">
                     <h4><i class="fas fa-cogs"></i> Key Features</h4>
                     <ul>
-                      <li>Built a tokenization and text cleanup script using <strong>NLTK</strong> and <strong>Regular Expressions</strong>.</li>
-                      <li>Resolved inflections contextually using WordNet Lemmatization (e.g. converting 'mice' to 'mouse').</li>
-                      <li>Mapped text structures using <strong>N-Gram generators</strong> (Bigrams, Trigrams, Quadgrams).</li>
+                      <li>Developed customized regex-based tokenization and text cleansing rules to strip HTML tags, punctuation, and numeric noise.</li>
+                      <li>Formulated stop-words filters and context-aware lemmatization pipelines utilizing NLTK WordNet libraries.</li>
+                      <li>Coded multi-gram analyzers (Bigrams, Trigrams, Quadgrams) to extract contiguous word sequences and analyze lexical frequency distributions.</li>
+                      <li>Mapped structural relationships in text using Part-of-Speech (POS) tagging.</li>
                     </ul>
                   </div>
                   <div class="details-section">
                     <h4><i class="fas fa-chart-line"></i> Business Impact &amp; Outcome</h4>
-                    <p>Increased accuracy of downstream classification models by <strong>14%</strong> and minimized vocabulary sizes by <strong>35%</strong>.</p>
+                    <p>Decreased text dimensional complexity by <strong>35%</strong> and increased validation accuracy of downstream sentiment classification models by <strong>14%</strong>.</p>
                   </div>
                 </div>
               </details>
@@ -515,16 +527,16 @@
           </article>
 
           <!-- Project 4: ML KNN & SLP -->
-          <article class="project-card fade-up">
+          <article class="project-card machine-learning fade-up">
             <div class="project-img-wrap">
-              <img class="project-img" src="assets/projects/machine_learning.png" alt="KNN Iris Classification Model" loading="lazy">
+              <img class="project-img" src="assets/projects/machine_learning.png" alt="Supervised Machine Learning Classifiers &amp; Predictive Modeling (KNN &amp; Perceptron)" loading="lazy">
             </div>
             <div class="project-body">
               <div class="project-header">
                 <span class="project-category">Machine Learning</span>
-                <h3>Predictive ML Models (KNN &amp; Perceptron)</h3>
+                <h3>Supervised Machine Learning Classifiers &amp; Predictive Modeling (KNN &amp; Perceptron)</h3>
               </div>
-              <p class="project-summary">Constructed a tuned K-Nearest Neighbors (KNN) model and coded a Single-Layer Perceptron from scratch to isolate decision boundaries.</p>
+              <p class="project-summary">Engineered a supervised machine learning classification framework, tuning a K-Nearest Neighbors (KNN) model and writing a Single-Layer Perceptron (SLP) from scratch to evaluate boundary decision limits.</p>
               
               <details class="project-details">
                 <summary><span class="details-toggle-txt">View Case Study</span> <i class="fas fa-chevron-down"></i></summary>
@@ -536,14 +548,15 @@
                   <div class="details-section">
                     <h4><i class="fas fa-cogs"></i> Key Features</h4>
                     <ul>
-                      <li>Built a multi-class KNN classifier, tuning hyperparameter `k` using cross-validation.</li>
-                      <li>Wrote a custom <strong>Single-Layer Perceptron (SLP)</strong> from scratch to classify binary sets.</li>
-                      <li>Conducted Exploratory Data Analysis (EDA) plotting distributions, pairplots, and heatmaps in Seaborn.</li>
+                      <li>Developed and cross-validated a multi-class **K-Nearest Neighbors (KNN)** model, tuning hyperparameter `k` using elbow curves and grid search strategies.</li>
+                      <li>Built a custom **Single-Layer Perceptron** from mathematical first principles in Python (NumPy) to model linearly separable classification datasets.</li>
+                      <li>Performed comprehensive Exploratory Data Analysis (EDA) plotting joint distributions, correlation heatmaps, and pairplots using Seaborn.</li>
+                      <li>Calculated evaluation metrics including Precision, Recall, F1-Score, and Confusion Matrices.</li>
                     </ul>
                   </div>
                   <div class="details-section">
                     <h4><i class="fas fa-chart-line"></i> Business Impact &amp; Outcome</h4>
-                    <p>Delivered <strong>98% classification accuracy</strong> on test datasets while ensuring model interpretability and reducing setup times by <strong>50%</strong>.</p>
+                    <p>Attained <strong>98% classification accuracy</strong> on test benchmark datasets while providing clear model interpretability and reducing setup overhead by <strong>50%</strong>.</p>
                   </div>
                 </div>
               </details>
@@ -563,16 +576,16 @@
           </article>
 
           <!-- Project 5: Enterprise Feature Engineering -->
-          <article class="project-card fade-up">
+          <article class="project-card analytics fade-up">
             <div class="project-img-wrap">
-              <img class="project-img" src="assets/projects/data_analytics.png" alt="Missing Value Imputation Pipeline" loading="lazy">
+              <img class="project-img" src="assets/projects/data_analytics.png" alt="Automated Data Engineering Pipeline &amp; Interactive Power BI Dashboard" loading="lazy">
             </div>
             <div class="project-body">
               <div class="project-header">
-                <span class="project-category">Data Engineering &amp; Analytics</span>
-                <h3>Enterprise Data Cleansing &amp; Analytics Pipeline</h3>
+                <span class="project-category">Data Engineering &amp; Business Intelligence</span>
+                <h3>Automated Data Engineering Pipeline &amp; Interactive Power BI Dashboard</h3>
               </div>
-              <p class="project-summary">Developed an automated ingestion script to resolve null values and categorical variables, feeding structured metrics to Power BI.</p>
+              <p class="project-summary">Architected an automated data ingestion and preprocessing pipeline to clean, encode, and impute raw transactional datasets, outputting clean tables into interactive Power BI dashboards.</p>
               
               <details class="project-details">
                 <summary><span class="details-toggle-txt">View Case Study</span> <i class="fas fa-chevron-down"></i></summary>
@@ -584,14 +597,15 @@
                   <div class="details-section">
                     <h4><i class="fas fa-cogs"></i> Key Features</h4>
                     <ul>
-                      <li>Automated null imputation utilizing statistical metrics (mean/median/mode) and KNN imputation.</li>
-                      <li>Engineered data conversions using <strong>One-Hot Encoding</strong> and <strong>Ordinal Mapping</strong>.</li>
-                      <li>Integrated structured tables into **Power BI**, writing DAX measures to track corporate metrics.</li>
+                      <li>Programmed automated null-handling modules implementing statistical imputation (mean/median/mode) and KNN imputation strategies to handle missing-at-random values.</li>
+                      <li>Engineered custom feature encoding pipelines (One-Hot Encoding, Ordinal Mapping) for categorical variables.</li>
+                      <li>Structured SQL data schemas and migrated cleaned data models into **Power BI Desktop**.</li>
+                      <li>Formulated advanced **DAX measures** (Data Analysis Expressions) to compute corporate KPIs, trends, and business metrics.</li>
                     </ul>
                   </div>
                   <div class="details-section">
                     <h4><i class="fas fa-chart-line"></i> Business Impact &amp; Outcome</h4>
-                    <p>Reduced manual preprocessing cycle times by <strong>40%</strong> and prevented model bias in production by standardizing input tables.</p>
+                    <p>Reduced manual data prep cycles by <strong>40%</strong> and minimized dashboard loading latencies, providing stakeholders with real-time operational insights.</p>
                   </div>
                 </div>
               </details>

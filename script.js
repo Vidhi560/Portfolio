@@ -50,6 +50,7 @@
     initCertModal();
     initBackToTop();
     initContactForm();
+    initProjectFilters();
     fetchProjects();
   }
 
@@ -527,6 +528,62 @@
     document.querySelectorAll('.form-group input, .form-group textarea').forEach(el => el.classList.remove('invalid'));
     document.querySelectorAll('.form-feedback.error').forEach(el => {
       if (el.id !== 'form-error') el.textContent = '';
+    });
+  }
+
+  /* --- Project Filtering --- */
+  function initProjectFilters() {
+    const filters = document.querySelectorAll('.filter-btn');
+    const cards = document.querySelectorAll('#featured-projects-grid .project-card');
+
+    filters.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const filterValue = btn.dataset.filter;
+
+        // Update active filter button attributes and classes
+        filters.forEach(f => {
+          f.classList.remove('active');
+          f.setAttribute('aria-selected', 'false');
+          f.setAttribute('tabindex', '-1');
+        });
+        btn.classList.add('active');
+        btn.setAttribute('aria-selected', 'true');
+        btn.setAttribute('tabindex', '0');
+
+        cards.forEach(card => {
+          // Trigger smooth fade-out and scale transition
+          card.style.opacity = '0';
+          card.style.transform = 'translateY(15px) scale(0.98)';
+
+          setTimeout(() => {
+            if (filterValue === 'all' || card.classList.contains(filterValue)) {
+              card.classList.remove('hidden');
+              setTimeout(() => {
+                card.style.opacity = '1';
+                card.style.transform = 'translateY(0) scale(1)';
+              }, 50);
+            } else {
+              card.classList.add('hidden');
+            }
+          }, 300); // matches CSS transitions
+        });
+      });
+
+      // Keyboard navigation support for accessibility (Arrow keys)
+      btn.addEventListener('keydown', e => {
+        let index = Array.from(filters).indexOf(btn);
+        if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+          e.preventDefault();
+          let nextIndex = (index + 1) % filters.length;
+          filters[nextIndex].focus();
+          filters[nextIndex].click();
+        } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+          e.preventDefault();
+          let prevIndex = (index - 1 + filters.length) % filters.length;
+          filters[prevIndex].focus();
+          filters[prevIndex].click();
+        }
+      });
     });
   }
 
