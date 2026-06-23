@@ -218,11 +218,11 @@ ul { list-style: none; }
 }
 .hero-greeting { font-size: 1.25rem; color: var(--accent); font-weight: 600; margin-bottom: 0.35rem; letter-spacing: 1.5px; text-transform: uppercase; }
 .hero-name {
-  font-family: var(--font-heading); font-size: clamp(2.5rem, 6vw, 4rem);
+  font-family: var(--font-heading); font-size: clamp(2.1rem, 5.1vw, 3.3rem);
   font-weight: 800; line-height: 1.15; margin-bottom: 0.75rem; letter-spacing: -1.5px;
   background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
 }
-.hero-role { font-family: var(--font-heading); font-size: clamp(1.2rem, 3vw, 1.6rem); font-weight: 700; margin-bottom: 1rem; color: var(--text); }
+.hero-role { font-family: var(--font-heading); font-size: clamp(1.3rem, 3.2vw, 1.8rem); font-weight: 800; margin-bottom: 1.25rem; color: var(--accent); letter-spacing: 0.5px; }
 .hero-typing-wrap { font-size: 1.35rem; margin-bottom: 1.25rem; min-height: 1.8em; }
 .typing-text {
   color: var(--primary-light); font-weight: 800;
@@ -230,7 +230,31 @@ ul { list-style: none; }
   animation: blink 0.75s step-end infinite;
 }
 @keyframes blink { 50% { border-color: transparent; } }
-.hero-tagline { color: var(--text-muted); max-width: 540px; margin-bottom: 2rem; font-size: 1.05rem; line-height: 1.7; }
+.hero-tagline { color: var(--text-muted); max-width: 540px; margin-bottom: 1.5rem; font-size: 1.05rem; line-height: 1.7; }
+.hero-tech-stack {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 2.25rem;
+  font-size: 0.925rem;
+  font-weight: 600;
+  color: var(--text-dim);
+}
+.hero-tech-stack span {
+  color: var(--primary-light);
+  background: var(--surface);
+  padding: 0.25rem 0.8rem;
+  border-radius: 20px;
+  border: 1px solid var(--glass-border);
+  transition: var(--transition);
+}
+.hero-tech-stack span:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(6, 182, 212, 0.15);
+}
 .hero-buttons { display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 2.25rem; }
 .hero-social { display: flex; gap: 0.85rem; }
 .hero-social a {

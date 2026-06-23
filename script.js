@@ -30,8 +30,8 @@
   const TYPING_WORDS = [
     'Data Scientist',
     'Machine Learning Engineer',
-    'AI & Deep Learning Specialist',
-    'Generative AI & LLM Developer'
+    'Data Analyst',
+    'AI Enthusiast'
   ];
 
   let projectCount = 0;
