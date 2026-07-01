@@ -371,276 +371,19 @@
         <!-- Project Filters -->
         <div class="project-filters fade-up" role="tablist" aria-label="Project Categories">
           <button class="filter-btn active" data-filter="all" role="tab" aria-selected="true" tabindex="0">All Projects</button>
-          <button class="filter-btn" data-filter="machine-learning" role="tab" aria-selected="false" tabindex="-1">Machine Learning</button>
-          <button class="filter-btn" data-filter="deep-learning" role="tab" aria-selected="false" tabindex="-1">Deep Learning &amp; CV</button>
-          <button class="filter-btn" data-filter="nlp" role="tab" aria-selected="false" tabindex="-1">NLP &amp; GenAI</button>
-          <button class="filter-btn" data-filter="analytics" role="tab" aria-selected="false" tabindex="-1">Data Analytics &amp; BI</button>
+          <button class="filter-btn" data-filter="featured" role="tab" aria-selected="false" tabindex="-1">Featured</button>
+          <button class="filter-btn" data-filter="ml" role="tab" aria-selected="false" tabindex="-1">Machine Learning</button>
+          <button class="filter-btn" data-filter="deep-learning" role="tab" aria-selected="false" tabindex="-1">Deep Learning</button>
+          <button class="filter-btn" data-filter="power-bi" role="tab" aria-selected="false" tabindex="-1">Power BI</button>
+          <button class="filter-btn" data-filter="nlp" role="tab" aria-selected="false" tabindex="-1">NLP</button>
+          <button class="filter-btn" data-filter="python" role="tab" aria-selected="false" tabindex="-1">Python</button>
         </div>
 
         <div class="projects-grid" id="featured-projects-grid">
-          
-          <!-- Project 1: Recommender -->
-          <article class="project-card machine-learning nlp fade-up">
-            <div class="project-img-wrap">
-              <img class="project-img" src="assets/projects/recommender.png" alt="Hybrid Recommendation Engine for Personalized Content Discovery" loading="lazy">
-            </div>
-            <div class="project-body">
-              <div class="project-header">
-                <span class="project-category">Recommendation Systems &amp; NLP</span>
-                <h3>Hybrid Recommendation Engine for Personalized Content Discovery</h3>
-              </div>
-              <p class="project-summary">Developed a high-performance content-based recommendation system leveraging TF-IDF Vectorization and Cosine Similarity to address cold-start issues, optimize query latency, and deliver personalized user recommendations.</p>
-              
-              <details class="project-details">
-                <summary><span class="details-toggle-txt">View Case Study</span> <i class="fas fa-chevron-down"></i></summary>
-                <div class="details-content">
-                  <div class="details-section">
-                    <h4><i class="fas fa-exclamation-circle"></i> Problem Statement</h4>
-                    <p>Standard recommendation systems suffer from severe search latency and the "cold start" issue on sparse datasets, leading to subpar recommendations and low engagement.</p>
-                  </div>
-                  <div class="details-section">
-                    <h4><i class="fas fa-cogs"></i> Key Features</h4>
-                    <ul>
-                      <li>Engineered text preprocessing pipelines using regular expressions and NLTK to clean and normalize movie metadata.</li>
-                      <li>Vectorized textual metadata for 5,000+ titles using **TF-IDF Vectorizer** to transform text into high-dimensional numerical feature vectors.</li>
-                      <li>Calculated pairwise item similarity scores utilizing a **Cosine Similarity Matrix** for real-time recommendation retrieval.</li>
-                      <li>Implemented dynamic fallback mechanisms and hybrid filtering combining genre tags with popularity metrics.</li>
-                    </ul>
-                  </div>
-                  <div class="details-section">
-                    <h4><i class="fas fa-chart-line"></i> Business Impact &amp; Outcome</h4>
-                    <p>Reduced query search latency by <strong>45%</strong> and increased offline recommendation precision/recall metrics, resulting in a <strong>94% simulated user satisfaction rate</strong>.</p>
-                  </div>
-                </div>
-              </details>
-
-              <div class="project-tags">
-                <span class="project-tag">Python</span>
-                <span class="project-tag">Scikit-learn</span>
-                <span class="project-tag">Pandas</span>
-                <span class="project-tag">NLP</span>
-              </div>
-              <div class="project-actions">
-                <a href="https://github.com/Vidhi560/Best-Movies-Recommended-From-Every-Genre-" class="btn btn-sm btn-primary" target="_blank" rel="noopener noreferrer">
-                  <i class="fab fa-github"></i> GitHub Link
-                </a>
-              </div>
-            </div>
-          </article>
-
-          <!-- Project 2: Deep Learning CNN -->
-          <article class="project-card deep-learning fade-up">
-            <div class="project-img-wrap">
-              <img class="project-img" src="assets/projects/deep_learning.png" alt="Convolutional Neural Network (CNN) for Automated Image Classification &amp; Feature Extraction" loading="lazy">
-            </div>
-            <div class="project-body">
-              <div class="project-header">
-                <span class="project-category">Computer Vision &amp; Deep Learning</span>
-                <h3>Convolutional Neural Network (CNN) for Automated Image Classification &amp; Feature Extraction</h3>
-              </div>
-              <p class="project-summary">Designed and trained an end-to-end deep learning Convolutional Neural Network (CNN) incorporating spatial augmentation and dropout regularization to classify image datasets with high precision.</p>
-              
-              <details class="project-details">
-                <summary><span class="details-toggle-txt">View Case Study</span> <i class="fas fa-chevron-down"></i></summary>
-                <div class="details-content">
-                  <div class="details-section">
-                    <h4><i class="fas fa-exclamation-circle"></i> Problem Statement</h4>
-                    <p>Automatic visual detection of features is highly error-prone on raw, unaugmented image sets, leading to overfitting and low validation metrics.</p>
-                  </div>
-                  <div class="details-section">
-                    <h4><i class="fas fa-cogs"></i> Key Features</h4>
-                    <ul>
-                      <li>Architected a 4-layer sequential **Convolutional Neural Network (CNN)** utilizing Conv2D, MaxPooling2D, Batch Normalization, and Dropout (0.5) to prevent overfitting.</li>
-                      <li>Integrated real-time data ingestion pipelines using Keras **ImageDataGenerator** for spatial transformations, scaling, shearing, and zooming.</li>
-                      <li>Employed callback systems including EarlyStopping and ReduceLROnPlateau to optimize learning rate schedules during training.</li>
-                      <li>Tracked loss and accuracy metrics via Matplotlib learning curves to evaluate generalization bounds.</li>
-                    </ul>
-                  </div>
-                  <div class="details-section">
-                    <h4><i class="fas fa-chart-line"></i> Business Impact &amp; Outcome</h4>
-                    <p>Achieved a <strong>91.5% classification accuracy</strong> on a validation set of 25,000 images, reducing image tagging error rates by <strong>12%</strong> and demonstrating solid generalization capabilities.</p>
-                  </div>
-                </div>
-              </details>
-
-              <div class="project-tags">
-                <span class="project-tag">Python</span>
-                <span class="project-tag">TensorFlow</span>
-                <span class="project-tag">Keras</span>
-                <span class="project-tag">CNN</span>
-              </div>
-              <div class="project-actions">
-                <a href="https://github.com/Vidhi560/CNN---Cat-vs-Dog-Classification-" class="btn btn-sm btn-primary" target="_blank" rel="noopener noreferrer">
-                  <i class="fab fa-github"></i> GitHub Link
-                </a>
-              </div>
-            </div>
-          </article>
-
-          <!-- Project 3: NLP N-Gram -->
-          <article class="project-card nlp fade-up">
-            <div class="project-img-wrap">
-              <img class="project-img" src="assets/projects/nlp.png" alt="Natural Language Processing (NLP) Pipeline &amp; N-Gram Text Analyzer" loading="lazy">
-            </div>
-            <div class="project-body">
-              <div class="project-header">
-                <span class="project-category">Natural Language Processing</span>
-                <h3>Natural Language Processing (NLP) Pipeline &amp; N-Gram Text Analyzer</h3>
-              </div>
-              <p class="project-summary">Built a modular NLP pipeline in Python for advanced text normalization, tokenization, POS-tagging, and N-gram frequency analysis to extract semantic structure from unstructured text.</p>
-              
-              <details class="project-details">
-                <summary><span class="details-toggle-txt">View Case Study</span> <i class="fas fa-chevron-down"></i></summary>
-                <div class="details-content">
-                  <div class="details-section">
-                    <h4><i class="fas fa-exclamation-circle"></i> Problem Statement</h4>
-                    <p>Raw text datasets contain significant syntactic noise (stop words, inflections) which degrades accuracy and increases computational load of NLP classifiers.</p>
-                  </div>
-                  <div class="details-section">
-                    <h4><i class="fas fa-cogs"></i> Key Features</h4>
-                    <ul>
-                      <li>Developed customized regex-based tokenization and text cleansing rules to strip HTML tags, punctuation, and numeric noise.</li>
-                      <li>Formulated stop-words filters and context-aware lemmatization pipelines utilizing NLTK WordNet libraries.</li>
-                      <li>Coded multi-gram analyzers (Bigrams, Trigrams, Quadgrams) to extract contiguous word sequences and analyze lexical frequency distributions.</li>
-                      <li>Mapped structural relationships in text using Part-of-Speech (POS) tagging.</li>
-                    </ul>
-                  </div>
-                  <div class="details-section">
-                    <h4><i class="fas fa-chart-line"></i> Business Impact &amp; Outcome</h4>
-                    <p>Decreased text dimensional complexity by <strong>35%</strong> and increased validation accuracy of downstream sentiment classification models by <strong>14%</strong>.</p>
-                  </div>
-                </div>
-              </details>
-
-              <div class="project-tags">
-                <span class="project-tag">Python</span>
-                <span class="project-tag">NLTK</span>
-                <span class="project-tag">NLP</span>
-                <span class="project-tag">RegEx</span>
-              </div>
-              <div class="project-actions">
-                <a href="https://github.com/Vidhi560/N-Gram-Analysis-in-NLP-Natural-Language-Processing-" class="btn btn-sm btn-primary" target="_blank" rel="noopener noreferrer">
-                  <i class="fab fa-github"></i> GitHub Link
-                </a>
-              </div>
-            </div>
-          </article>
-
-          <!-- Project 4: ML KNN & SLP -->
-          <article class="project-card machine-learning fade-up">
-            <div class="project-img-wrap">
-              <img class="project-img" src="assets/projects/machine_learning.png" alt="Supervised Machine Learning Classifiers &amp; Predictive Modeling (KNN &amp; Perceptron)" loading="lazy">
-            </div>
-            <div class="project-body">
-              <div class="project-header">
-                <span class="project-category">Machine Learning</span>
-                <h3>Supervised Machine Learning Classifiers &amp; Predictive Modeling (KNN &amp; Perceptron)</h3>
-              </div>
-              <p class="project-summary">Engineered a supervised machine learning classification framework, tuning a K-Nearest Neighbors (KNN) model and writing a Single-Layer Perceptron (SLP) from scratch to evaluate boundary decision limits.</p>
-              
-              <details class="project-details">
-                <summary><span class="details-toggle-txt">View Case Study</span> <i class="fas fa-chevron-down"></i></summary>
-                <div class="details-content">
-                  <div class="details-section">
-                    <h4><i class="fas fa-exclamation-circle"></i> Problem Statement</h4>
-                    <p>Deploying heavy neural network architectures for low-complexity classification tasks results in unnecessary overhead and low interpretability.</p>
-                  </div>
-                  <div class="details-section">
-                    <h4><i class="fas fa-cogs"></i> Key Features</h4>
-                    <ul>
-                      <li>Developed and cross-validated a multi-class **K-Nearest Neighbors (KNN)** model, tuning hyperparameter `k` using elbow curves and grid search strategies.</li>
-                      <li>Built a custom **Single-Layer Perceptron** from mathematical first principles in Python (NumPy) to model linearly separable classification datasets.</li>
-                      <li>Performed comprehensive Exploratory Data Analysis (EDA) plotting joint distributions, correlation heatmaps, and pairplots using Seaborn.</li>
-                      <li>Calculated evaluation metrics including Precision, Recall, F1-Score, and Confusion Matrices.</li>
-                    </ul>
-                  </div>
-                  <div class="details-section">
-                    <h4><i class="fas fa-chart-line"></i> Business Impact &amp; Outcome</h4>
-                    <p>Attained <strong>98% classification accuracy</strong> on test benchmark datasets while providing clear model interpretability and reducing setup overhead by <strong>50%</strong>.</p>
-                  </div>
-                </div>
-              </details>
-
-              <div class="project-tags">
-                <span class="project-tag">Python</span>
-                <span class="project-tag">Scikit-learn</span>
-                <span class="project-tag">KNN</span>
-                <span class="project-tag">Seaborn</span>
-              </div>
-              <div class="project-actions">
-                <a href="https://github.com/Vidhi560/KNN---Iris-Flower-Classification" class="btn btn-sm btn-primary" target="_blank" rel="noopener noreferrer">
-                  <i class="fab fa-github"></i> GitHub Link
-                </a>
-              </div>
-            </div>
-          </article>
-
-          <!-- Project 5: Enterprise Feature Engineering -->
-          <article class="project-card analytics fade-up">
-            <div class="project-img-wrap">
-              <img class="project-img" src="assets/projects/data_analytics.png" alt="Automated Data Engineering Pipeline &amp; Interactive Power BI Dashboard" loading="lazy">
-            </div>
-            <div class="project-body">
-              <div class="project-header">
-                <span class="project-category">Data Engineering &amp; Business Intelligence</span>
-                <h3>Automated Data Engineering Pipeline &amp; Interactive Power BI Dashboard</h3>
-              </div>
-              <p class="project-summary">Architected an automated data ingestion and preprocessing pipeline to clean, encode, and impute raw transactional datasets, outputting clean tables into interactive Power BI dashboards.</p>
-              
-              <details class="project-details">
-                <summary><span class="details-toggle-txt">View Case Study</span> <i class="fas fa-chevron-down"></i></summary>
-                <div class="details-content">
-                  <div class="details-section">
-                    <h4><i class="fas fa-exclamation-circle"></i> Problem Statement</h4>
-                    <p>Incomplete data and raw categorical columns severely distort analytical dashboards and break machine learning pipelines.</p>
-                  </div>
-                  <div class="details-section">
-                    <h4><i class="fas fa-cogs"></i> Key Features</h4>
-                    <ul>
-                      <li>Programmed automated null-handling modules implementing statistical imputation (mean/median/mode) and KNN imputation strategies to handle missing-at-random values.</li>
-                      <li>Engineered custom feature encoding pipelines (One-Hot Encoding, Ordinal Mapping) for categorical variables.</li>
-                      <li>Structured SQL data schemas and migrated cleaned data models into **Power BI Desktop**.</li>
-                      <li>Formulated advanced **DAX measures** (Data Analysis Expressions) to compute corporate KPIs, trends, and business metrics.</li>
-                    </ul>
-                  </div>
-                  <div class="details-section">
-                    <h4><i class="fas fa-chart-line"></i> Business Impact &amp; Outcome</h4>
-                    <p>Reduced manual data prep cycles by <strong>40%</strong> and minimized dashboard loading latencies, providing stakeholders with real-time operational insights.</p>
-                  </div>
-                </div>
-              </details>
-
-              <div class="project-tags">
-                <span class="project-tag">Python</span>
-                <span class="project-tag">Pandas</span>
-                <span class="project-tag">Power BI</span>
-                <span class="project-tag">SQL</span>
-              </div>
-              <div class="project-actions">
-                <a href="https://github.com/Vidhi560/handled-missing-null-values" class="btn btn-sm btn-primary" target="_blank" rel="noopener noreferrer">
-                  <i class="fab fa-github"></i> GitHub Link
-                </a>
-              </div>
-            </div>
-          </article>
-
-        </div>
-
-        <!-- Collapsible secondary GitHub Projects -->
-        <div class="github-repos-section fade-up">
-          <details class="github-repos-accordion">
-            <summary class="github-repos-summary">
-              <span><i class="fab fa-github"></i> Explore More GitHub Repositories</span>
-              <i class="fas fa-chevron-down toggle-icon"></i>
-            </summary>
-            <div id="github-projects-grid" class="projects-grid github-projects-grid">
-              <!-- Dynamic cards will load here -->
-              <div class="projects-loading" id="github-projects-loading">
-                <div class="spinner"></div>
-                <p>Fetching active repositories...</p>
-              </div>
-            </div>
-          </details>
+          <div class="projects-loading" id="github-projects-loading">
+            <div class="spinner"></div>
+            <p>Fetching active projects and case studies...</p>
+          </div>
         </div>
 
         <div id="projects-error" class="projects-message hidden" role="alert"></div>
@@ -745,6 +488,10 @@
             <a href="mailto:vidhi3684@gmail.com" class="contact-item">
               <span class="contact-icon"><i class="fas fa-envelope"></i></span>
               <span><strong>Email</strong>vidhi3684@gmail.com</span>
+            </a>
+            <a href="tel:+917610713996" class="contact-item">
+              <span class="contact-icon"><i class="fas fa-phone"></i></span>
+              <span><strong>Phone</strong>+91 7610713996</span>
             </a>
             <a href="http://linkedin.com/in/vidhi-prajapati-b91a35183" class="contact-item" target="_blank" rel="noopener noreferrer">
               <span class="contact-icon"><i class="fab fa-linkedin-in"></i></span>

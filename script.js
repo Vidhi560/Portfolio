@@ -315,8 +315,99 @@
   }
 
   /* --- GitHub Projects --- */
+  const FEATURED_ORDER = [
+    'Bank-Customer-Churn-Prediction-ANN',
+    'HR-Analytics-Dashboard-PowerBI',
+    'CNN---Cat-vs-Dog-Classification-',
+    'Supply-Chain-Analytics',
+    'Best-Movies-Recommended-From-Every-Genre-',
+    'KNN---Iris-Flower-Classification'
+  ];
+
+  const PROJECT_METADATA = {
+    'Bank-Customer-Churn-Prediction-ANN': {
+      categoryLabel: 'Deep Learning & ML',
+      title: 'Bank Customer Churn Prediction (ANN)',
+      summary: 'Engineered an Artificial Neural Network (ANN) classifier utilizing TensorFlow/Keras to model risk profiles and predict customer churn patterns.',
+      problem: 'Customer churn represents a significant revenue leakage for retail banking. Predicting risk patterns enables proactive retention campaigns.',
+      features: [
+        'Preprocessed and cleaned customer demographic and financial datasets.',
+        'Performed feature engineering, handling categorical variables via One-Hot Encoding.',
+        'Built a multi-layer Artificial Neural Network (ANN) using TensorFlow and Keras.',
+        'Optimized the network structure with Batch Normalization, Dropout, and Adam optimizer.',
+        'Evaluated performance using confusion matrix, precision, recall, and ROC-AUC curves.'
+      ],
+      outcome: 'Achieved 85–86% classification accuracy on validation test splits, identifying high-risk customer cohorts for target campaigns.'
+    },
+    'HR-Analytics-Dashboard-PowerBI': {
+      categoryLabel: 'Data Analytics & BI',
+      title: 'Enterprise HR Analytics & Retention Dashboard',
+      summary: 'Designed an interactive Power BI dashboard to analyze IBM HR datasets, identifying critical factors influencing workforce attrition.',
+      problem: 'Enterprise attrition leads to massive hiring overhead and cultural knowledge gaps; identifying systemic attrition variables is vital.',
+      features: [
+        'Performed data extraction, cleaning, and table formatting in Power Query.',
+        'Created a robust star-schema data model linking employees to organizational units.',
+        'Programmed advanced DAX measures to calculate attrition rates, satisfaction indices, and headcount.',
+        'Designed interactive slicers, cross-filtering, and heatmaps for leadership review.'
+      ],
+      outcome: 'Provided HR executives with actionable insights, contributing to a simulated 15% reduction in yearly attrition.'
+    },
+    'CNN---Cat-vs-Dog-Classification-': {
+      categoryLabel: 'Computer Vision & Deep Learning',
+      title: 'Convolutional Neural Network (CNN) Image Classifier',
+      summary: 'Trained a 4-layer sequential CNN using spatial data augmentation to classify images with high precision and low generalization error.',
+      problem: 'Computer vision models require heavy regularization and normalization to generalize across diverse, raw image inputs.',
+      features: [
+        'Built image loading pipelines using Keras ImageDataGenerator for real-time augmentation.',
+        'Integrated MaxPooling, Batch Normalization, and Dropout to avoid overfitting.',
+        'Utilized EarlyStopping and learning rate reduction callbacks during training.',
+        'Analyzed model convergence using loss and accuracy learning curves.'
+      ],
+      outcome: 'Achieved 91.5% classification accuracy on a validation dataset of 25,000 images, proving high model robustness.'
+    },
+    'Supply-Chain-Analytics': {
+      categoryLabel: 'Data Analytics & BI',
+      title: 'End-to-End Supply Chain Analytics Platform',
+      summary: 'Built a BI dashboard leveraging DAX measures and clean data pipelines to optimize logistics, inventory, and delivery performance.',
+      problem: 'Supply chain bottlenecks, delays, and poor inventory management increase operational expenses and hurt consumer trust.',
+      features: [
+        'Developed custom Python ETL processes for multi-source data cleaning.',
+        'Modeled dimensions and fact tables using advanced relationship mapping in Power BI.',
+        'Formulated metrics for on-time delivery (OTD), backorder rate, and carrier efficiency.',
+        'Crafted dynamic dashboards highlighting logistical bottlenecks and cost savings.'
+      ],
+      outcome: 'Identified key shipping delays and inventory leakage points, projecting 10% cost savings.'
+    },
+    'Best-Movies-Recommended-From-Every-Genre-': {
+      categoryLabel: 'Recommendation Systems & NLP',
+      title: 'Hybrid Recommendation Engine for Content Discovery',
+      summary: 'Implemented a content-based filtering system using TF-IDF Vectorization and Cosine Similarity to recommend movies based on genre and metadata.',
+      problem: 'Cold-start problems and sparse search features reduce user engagement on streaming and content discovery platforms.',
+      features: [
+        'Engineered metadata cleaning scripts using Regular Expressions and NLTK.',
+        'Vectorized textual attributes (genres, keywords) into high-dimensional TF-IDF vectors.',
+        'Calculated pairwise Cosine Similarity scores for real-time recommendation retrieval.',
+        'Built popularity-weighted ranking updates to balance content quality.'
+      ],
+      outcome: 'Reduced recommendation query search latency by 45% while achieving 94% simulated user satisfaction.'
+    },
+    'KNN---Iris-Flower-Classification': {
+      categoryLabel: 'Machine Learning',
+      title: 'Supervised KNN Classifier for Biological Classification',
+      summary: 'Implemented a K-Nearest Neighbors (KNN) model, tuning hyperparameters via elbow curves to classify flower species with high reliability.',
+      problem: 'High-dimensional classification benchmarks need lightweight, highly interpretable classifiers rather than opaque neural nets.',
+      features: [
+        'Explored feature distributions using Seaborn pairplots, correlation matrices, and jointplots.',
+        'Normalised feature dimensions using standard scaling.',
+        'Visualised model decision boundaries across varying values of hyperparameter K.',
+        'Calculated evaluation metrics including Precision, Recall, F1-Score, and Confusion Matrices.'
+      ],
+      outcome: 'Attained 98% classification accuracy on validation test splits with near-zero latency.'
+    }
+  };
+
   async function fetchProjects() {
-    const grid = document.getElementById('github-projects-grid');
+    const grid = document.getElementById('featured-projects-grid');
     const loading = document.getElementById('github-projects-loading');
     const errorEl = document.getElementById('projects-error');
     const emptyEl = document.getElementById('projects-empty');
@@ -334,6 +425,20 @@
          .filter(r => !isExcludedRepo(r.name))
          .filter(r => isRelevantRepo(r));
 
+      // Sort featured repositories to the top in the defined FEATURED_ORDER
+      filtered.sort((a, b) => {
+        const indexA = FEATURED_ORDER.indexOf(a.name);
+        const indexB = FEATURED_ORDER.indexOf(b.name);
+        
+        if (indexA !== -1 && indexB !== -1) {
+          return indexA - indexB;
+        }
+        if (indexA !== -1) return -1;
+        if (indexB !== -1) return 1;
+        
+        return new Date(b.updated_at) - new Date(a.updated_at);
+      });
+
       projectCount = filtered.length;
       loading?.classList.add('hidden');
 
@@ -343,8 +448,27 @@
         return;
       }
 
-      grid.insertAdjacentHTML('beforeend', filtered.map((r, i) => createProjectCard(r, i)).join(''));
+      grid.innerHTML = '';
+      
+      // Render cards
+      filtered.forEach((repo, i) => {
+        const cardHtml = createProjectCard(repo, i);
+        grid.insertAdjacentHTML('beforeend', cardHtml);
+      });
+      
+      // Start fetching README cover images asynchronously in the background
+      filtered.forEach((repo) => {
+        const cardEl = document.querySelector(`.project-card[data-repo="${repo.name}"]`);
+        if (cardEl) {
+          const imgEl = cardEl.querySelector('.project-img');
+          if (imgEl) {
+            updateCardImageFromReadme(repo, imgEl);
+          }
+        }
+      });
+
       initScrollReveal();
+      initProjectFilters();
       updateStatCounters();
 
     } catch (err) {
@@ -365,6 +489,70 @@
     const text = [repo.name, repo.description || '', repo.language || '', ...(repo.topics || [])].join(' ').toLowerCase();
     if (RELEVANT_LANGUAGES.includes((repo.language || '').toLowerCase())) return true;
     return RELEVANT_KEYWORDS.some(k => text.includes(k));
+  }
+
+  function getRepoCategories(repo) {
+    const name = repo.name.toLowerCase();
+    const desc = (repo.description || '').toLowerCase();
+    const lang = (repo.language || '').toLowerCase();
+    const topics = (repo.topics || []).map(t => t.toLowerCase());
+    
+    const categories = [];
+    
+    if (FEATURED_ORDER.includes(repo.name)) {
+      categories.push('featured');
+    }
+    if (
+      name.includes('ann') || name.includes('cnn') || name.includes('deep') || 
+      name.includes('neural') || name.includes('perceptron') || name.includes('tensorflow') || 
+      name.includes('keras') || topics.includes('deep-learning') || topics.includes('neural-networks')
+    ) {
+      categories.push('deep-learning');
+    }
+    if (
+      name.includes('nlp') || name.includes('word') || name.includes('sentence') || 
+      name.includes('token') || name.includes('stop-word') || name.includes('stemming') || 
+      name.includes('lemmatization') || name.includes('n-gram') || topics.includes('nlp') || 
+      topics.includes('natural-language-processing')
+    ) {
+      categories.push('nlp');
+    }
+    if (
+      name.includes('knn') || name.includes('churn') || name.includes('movie') || 
+      name.includes('recomm') || name.includes('classification') || name.includes('regression') || 
+      name.includes('clustering') || name.includes('encoding') || topics.includes('machine-learning') || 
+      topics.includes('ml') || name.includes('iris')
+    ) {
+      categories.push('ml');
+    }
+    if (
+      name.includes('powerbi') || name.includes('dashboard') || name.includes('supply-chain') || 
+      topics.includes('powerbi') || topics.includes('data-visualization') || 
+      desc.includes('power bi')
+    ) {
+      categories.push('power-bi');
+    }
+    if (
+      lang === 'python' || lang === 'jupyter notebook' || name.includes('python') || 
+      topics.includes('python')
+    ) {
+      categories.push('python');
+    }
+    
+    return categories;
+  }
+
+  function cleanProjectTitle(name) {
+    let title = name.replace(/[-_]+/g, ' ');
+    title = title.trim();
+    return title.split(' ').map(word => {
+      const upper = word.toUpperCase();
+      if (['ANN', 'CNN', 'NLP', 'KNN', 'ML', 'BI', 'AI', 'EDA', 'NLTK', 'SLP', 'POS'].includes(upper)) {
+        return upper;
+      }
+      if (upper === 'POWERBI') return 'Power BI';
+      return word.charAt(0).toUpperCase() + word.slice(1);
+    }).join(' ');
   }
 
   // Maps a repository name to a premium custom cover asset based on keywords
@@ -405,27 +593,165 @@
     return 'assets/projects/data_analytics.png';
   }
 
+  async function updateCardImageFromReadme(repo, imgElement) {
+    const branch = repo.default_branch || 'main';
+    const repoName = repo.name;
+    
+    // Try fetching README from raw.githubusercontent.com
+    const readmeUrls = [
+      `https://raw.githubusercontent.com/Vidhi560/${repoName}/${branch}/README.md`,
+      `https://raw.githubusercontent.com/Vidhi560/${repoName}/${branch}/readme.md`,
+      `https://raw.githubusercontent.com/Vidhi560/${repoName}/${branch}/README.MD`
+    ];
+    
+    let text = '';
+    for (const url of readmeUrls) {
+      try {
+        const res = await fetch(url);
+        if (res.ok) {
+          text = await res.text();
+          break;
+        }
+      } catch (e) {
+        // Ignore and continue
+      }
+    }
+    
+    if (!text) return;
+    
+    // Look for first image in markdown or HTML format
+    let imageUrl = '';
+    
+    const markdownImgRegex = /!\[.*?\]\((.*?)\)/;
+    const htmlImgRegex = /<img\s+[^>]*?src=["'](.*?)["']/;
+    
+    const mdMatch = text.match(markdownImgRegex);
+    if (mdMatch && mdMatch[1]) {
+      imageUrl = mdMatch[1].trim();
+    } else {
+      const htmlMatch = text.match(htmlImgRegex);
+      if (htmlMatch && htmlMatch[1]) {
+        imageUrl = htmlMatch[1].trim();
+      }
+    }
+    
+    if (!imageUrl) return;
+    
+    // Resolve relative URLs
+    if (!imageUrl.startsWith('http://') && !imageUrl.startsWith('https://')) {
+      const cleanPath = imageUrl.startsWith('./') ? imageUrl.substring(2) : imageUrl;
+      imageUrl = `https://raw.githubusercontent.com/Vidhi560/${repoName}/${branch}/${cleanPath}`;
+    }
+    
+    // Preload image in memory before swapping to prevent white flash
+    const tempImg = new Image();
+    tempImg.src = imageUrl;
+    tempImg.onload = () => {
+      imgElement.style.opacity = '0';
+      setTimeout(() => {
+        imgElement.src = imageUrl;
+        imgElement.style.opacity = '1';
+      }, 200);
+    };
+  }
+
+  function getRepoBadges(repo) {
+    const categories = getRepoCategories(repo);
+    const badges = new Set();
+    
+    if (repo.language) {
+      let lang = repo.language;
+      if (lang.toLowerCase() === 'jupyter notebook') lang = 'Python';
+      badges.add(lang);
+    }
+    
+    if (categories.includes('deep-learning')) {
+      badges.add('Deep Learning');
+      badges.add('TensorFlow');
+      badges.add('Keras');
+    }
+    if (categories.includes('nlp')) {
+      badges.add('NLP');
+    }
+    if (categories.includes('ml')) {
+      badges.add('Machine Learning');
+      badges.add('Scikit-learn');
+    }
+    if (categories.includes('power-bi')) {
+      badges.add('Power BI');
+    }
+    
+    const text = [repo.name, repo.description || '', ...(repo.topics || [])].join(' ').toLowerCase();
+    if (text.includes('pandas')) badges.add('Pandas');
+    if (text.includes('numpy')) badges.add('NumPy');
+    if (text.includes('sql') || text.includes('database')) badges.add('SQL');
+    if (text.includes('analytics') || text.includes('analysis')) badges.add('Data Analytics');
+    
+    if (badges.size === 0) {
+      badges.add('Python');
+    }
+    
+    return Array.from(badges).slice(0, 4);
+  }
+
   function createProjectCard(repo, index) {
-    const name = escapeHtml(repo.name);
-    const desc = escapeHtml(repo.description || 'Data science and analytics project hosted on GitHub.');
-    const lang = repo.language ? escapeHtml(repo.language) : '';
-    const topics = (repo.topics || []).slice(0, 3);
-    const tags = [lang, ...topics.map(t => escapeHtml(t))].filter(Boolean);
-    const tagsHtml = tags.map(t => `<span class="project-tag">${t}</span>`).join('') || '<span class="project-tag">Python</span>';
+    const isFeatured = FEATURED_ORDER.includes(repo.name);
+    const meta = PROJECT_METADATA[repo.name];
+    
+    const name = meta ? escapeHtml(meta.title) : escapeHtml(cleanProjectTitle(repo.name));
+    const desc = meta ? escapeHtml(meta.summary) : escapeHtml(repo.description || 'Data science and analytics project hosted on GitHub.');
+    const categoryLabel = meta ? escapeHtml(meta.categoryLabel) : (repo.language ? escapeHtml(repo.language) : 'Data Science');
+    
+    const categories = getRepoCategories(repo);
+    const classes = categories.join(' ');
+    
+    const badges = getRepoBadges(repo);
+    const tagsHtml = badges.map(t => `<span class="project-tag">${escapeHtml(t)}</span>`).join('');
     const imgUrl = getProjectImage(repo.name);
 
     const demoBtn = repo.homepage
       ? `<a href="${repo.homepage}" class="btn btn-sm btn-outline" target="_blank" rel="noopener noreferrer"><i class="fas fa-external-link-alt"></i> Live Demo</a>`
       : '';
 
+    // Generate Case Study collapsible details if featured
+    let detailsHtml = '';
+    if (isFeatured && meta) {
+      const featuresLi = meta.features.map(f => `<li>${escapeHtml(f)}</li>`).join('');
+      detailsHtml = `
+        <details class="project-details">
+          <summary><span class="details-toggle-txt">View Case Study</span> <i class="fas fa-chevron-down"></i></summary>
+          <div class="details-content">
+            <div class="details-section">
+              <h4><i class="fas fa-exclamation-circle"></i> Problem Statement</h4>
+              <p>${escapeHtml(meta.problem)}</p>
+            </div>
+            <div class="details-section">
+              <h4><i class="fas fa-cogs"></i> Key Features</h4>
+              <ul>
+                ${featuresLi}
+              </ul>
+            </div>
+            <div class="details-section">
+              <h4><i class="fas fa-chart-line"></i> Business Impact &amp; Outcome</h4>
+              <p>${escapeHtml(meta.outcome)}</p>
+            </div>
+          </div>
+        </details>
+      `;
+    }
+
     return `
-      <article class="project-card fade-up">
+      <article class="project-card fade-up ${classes}" data-repo="${escapeHtml(repo.name)}">
         <div class="project-img-wrap">
           <img class="project-img" src="${imgUrl}" alt="${name} project preview" loading="lazy">
         </div>
         <div class="project-body">
-          <h3>${name}</h3>
-          <p>${desc}</p>
+          <div class="project-header">
+            <span class="project-category">${categoryLabel}</span>
+            <h3>${name}</h3>
+          </div>
+          <p class="project-summary">${desc}</p>
+          ${detailsHtml}
           <div class="project-tags">${tagsHtml}</div>
           <div class="project-actions">
             <a href="${repo.html_url}" class="btn btn-sm btn-primary" target="_blank" rel="noopener noreferrer">
@@ -537,7 +863,8 @@
     const cards = document.querySelectorAll('#featured-projects-grid .project-card');
 
     filters.forEach(btn => {
-      btn.addEventListener('click', () => {
+      btn.removeEventListener('click', btn._clickHandler);
+      btn._clickHandler = () => {
         const filterValue = btn.dataset.filter;
 
         // Update active filter button attributes and classes
@@ -567,7 +894,8 @@
             }
           }, 300); // matches CSS transitions
         });
-      });
+      };
+      btn.addEventListener('click', btn._clickHandler);
 
       // Keyboard navigation support for accessibility (Arrow keys)
       btn.addEventListener('keydown', e => {
@@ -588,6 +916,7 @@
   }
 
   function escapeHtml(text) {
+    if (!text) return '';
     const d = document.createElement('div');
     d.textContent = text;
     return d.innerHTML;
