@@ -456,13 +456,13 @@
         grid.insertAdjacentHTML('beforeend', cardHtml);
       });
       
-      // Start fetching README cover images asynchronously in the background
+      // Start fetching project cover images asynchronously in the background
       filtered.forEach((repo) => {
         const cardEl = document.querySelector(`.project-card[data-repo="${repo.name}"]`);
         if (cardEl) {
           const imgEl = cardEl.querySelector('.project-img');
           if (imgEl) {
-            updateCardImageFromReadme(repo, imgEl);
+            updateCardImageWithCover(repo, imgEl);
           }
         }
       });
@@ -593,66 +593,44 @@
     return 'assets/projects/data_analytics.png';
   }
 
-  async function updateCardImageFromReadme(repo, imgElement) {
+  const COVER_PATHS = [
+    'assets/cover.png',
+    'assets/cover.jpg',
+    'assets/cover.jpeg',
+    'images/cover.png',
+    'images/cover.jpg',
+    'images/cover.jpeg',
+    'cover.png',
+    'cover.jpg',
+    'cover.jpeg'
+  ];
+
+  async function updateCardImageWithCover(repo, imgElement) {
     const branch = repo.default_branch || 'main';
     const repoName = repo.name;
-    
-    // Try fetching README from raw.githubusercontent.com
-    const readmeUrls = [
-      `https://raw.githubusercontent.com/Vidhi560/${repoName}/${branch}/README.md`,
-      `https://raw.githubusercontent.com/Vidhi560/${repoName}/${branch}/readme.md`,
-      `https://raw.githubusercontent.com/Vidhi560/${repoName}/${branch}/README.MD`
-    ];
-    
-    let text = '';
-    for (const url of readmeUrls) {
+    const username = GITHUB_USER;
+
+    for (const path of COVER_PATHS) {
+      const url = `https://raw.githubusercontent.com/${username}/${repoName}/${branch}/${path}`;
       try {
-        const res = await fetch(url);
+        const res = await fetch(url, { method: 'HEAD' });
         if (res.ok) {
-          text = await res.text();
-          break;
+          // Preload image in memory before swapping to prevent white flash
+          const tempImg = new Image();
+          tempImg.src = url;
+          tempImg.onload = () => {
+            imgElement.style.opacity = '0';
+            setTimeout(() => {
+              imgElement.src = url;
+              imgElement.style.opacity = '1';
+            }, 300);
+          };
+          break; // Stop checking further paths once a valid cover image is loaded
         }
       } catch (e) {
-        // Ignore and continue
+        // Ignore and continue checking paths
       }
     }
-    
-    if (!text) return;
-    
-    // Look for first image in markdown or HTML format
-    let imageUrl = '';
-    
-    const markdownImgRegex = /!\[.*?\]\((.*?)\)/;
-    const htmlImgRegex = /<img\s+[^>]*?src=["'](.*?)["']/;
-    
-    const mdMatch = text.match(markdownImgRegex);
-    if (mdMatch && mdMatch[1]) {
-      imageUrl = mdMatch[1].trim();
-    } else {
-      const htmlMatch = text.match(htmlImgRegex);
-      if (htmlMatch && htmlMatch[1]) {
-        imageUrl = htmlMatch[1].trim();
-      }
-    }
-    
-    if (!imageUrl) return;
-    
-    // Resolve relative URLs
-    if (!imageUrl.startsWith('http://') && !imageUrl.startsWith('https://')) {
-      const cleanPath = imageUrl.startsWith('./') ? imageUrl.substring(2) : imageUrl;
-      imageUrl = `https://raw.githubusercontent.com/Vidhi560/${repoName}/${branch}/${cleanPath}`;
-    }
-    
-    // Preload image in memory before swapping to prevent white flash
-    const tempImg = new Image();
-    tempImg.src = imageUrl;
-    tempImg.onload = () => {
-      imgElement.style.opacity = '0';
-      setTimeout(() => {
-        imgElement.src = imageUrl;
-        imgElement.style.opacity = '1';
-      }, 200);
-    };
   }
 
   function getRepoBadges(repo) {
